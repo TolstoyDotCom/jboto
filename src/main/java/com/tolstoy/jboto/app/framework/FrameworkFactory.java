@@ -37,18 +37,12 @@ public class FrameworkFactory implements IFrameworkFactory {
 	}
 
 	public IFramework makeFrameworkFromJSON( String name, String json ) {
-		JsonArray ary = Jsoner.deserialize( json, new JsonArray() );
-		if ( ary.size() != 1 ) {
-			throw new IllegalArgumentException( "must have just one root object" );
-		}
+		JsonObject rootMap = Jsoner.deserialize( json, new JsonObject() );
 
-		Map<String,Object> rootMap = ary.getMap( 0 );
 		List<Object> list = (List<Object>) rootMap.get( "commands" );
 		String id = (String) rootMap.get( "id" );
 
 		List<IFrameworkCommand> commands = createCommands( list );
-
-		//logger.info( commands );
 
 		return new Framework( id, commands );
 	}

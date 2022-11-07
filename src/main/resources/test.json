@@ -1,16 +1,14 @@
-[
-	{ "type": "container", "id": "main", "classname": "--none--", "commands": [
-		{ "type": "command", "classname": "BuildFrame" },
-		{ "type": "foreach", "classname": "GetHeadlightList", "commands": [
-			{ "type": "command", "classname": "AddHeadlight" },
-			{ "type": "if", "classname": "HasEnoughHeadlights", "commands": [
-				{ "type": "break", "classname": "--none--"}
-			]}
-		]},
-		{ "type": "command", "classname": "PaintIt" },
-		{ "type": "if", "classname": "HasLuxuryTrim", "commands": [
-			{ "type": "command", "classname": "AddWoodPaneling" }
-		]},
-		{ "type": "command", "classname": "RegisterIt" }
-	]}
-]
+{ "type": "container", "id": "main", "classname": "--none--", "commands": [
+	{ "type": "command", "classname": "BuildFrame" },
+	{ "type": "foreach", "classname": "GetHeadlightList", "commands": [
+		{ "type": "command", "classname": "AddHeadlight" },
+		{ "type": "if", "classname": "HasEnoughHeadlights", "commands": [
+			{ "type": "break", "classname": "--none--"}
+		]}
+	]},
+	{ "type": "command", "classname": "PaintIt" },
+	{ "type": "if", "classname": "HasLuxuryTrim", "commands": [
+		{ "type": "command", "classname": "AddWoodPaneling" }
+	]},
+	{ "type": "command", "classname": "RegisterIt" }
+]}
