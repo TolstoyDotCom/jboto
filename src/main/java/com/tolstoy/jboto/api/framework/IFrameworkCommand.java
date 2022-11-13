@@ -21,7 +21,6 @@ import com.tolstoy.jboto.api.IEnvironment;
 public interface IFrameworkCommand {
 	String getID();
 	String getTargetClassname();
-	String getTargetPackage();
 	String getTargetFQClassname();
 	String getShortName();
 	List<IFrameworkCommand> getCommands();

@@ -19,32 +19,32 @@ import java.lang.reflect.Constructor;
 import com.tolstoy.jboto.api.framework.IFrameworkCommand;
 
 abstract public class FrameworkCommand implements IFrameworkCommand {
-	private final String id, targetClassname, packageName;
+	private final String id, targetClassname, targetFQClassname;
 	private final List<IFrameworkCommand> commands;
 
-	public FrameworkCommand( String id, String targetClassname, String packageName, List<IFrameworkCommand> commands ) {
+	public FrameworkCommand( String id, String targetClassname, String targetFQClassname, List<IFrameworkCommand> commands ) {
 		this.id = id;
 		this.targetClassname = targetClassname;
-		this.packageName = packageName;
+		this.targetFQClassname = targetFQClassname;
 		this.commands = commands;
 	}
 
+	@Override
 	public String getID() {
 		return id;
 	}
 
+	@Override
 	public String getTargetClassname() {
 		return targetClassname;
 	}
 
-	public String getTargetPackage() {
-		return packageName;
-	}
-
+	@Override
 	public String getTargetFQClassname() {
-		return packageName + "." + targetClassname;
+		return targetFQClassname;
 	}
 
+	@Override
 	public List<IFrameworkCommand> getCommands() {
 		return commands;
 	}
@@ -55,6 +55,7 @@ abstract public class FrameworkCommand implements IFrameworkCommand {
 		return clazz.getConstructor();
 	}
 
+	@Override
 	public String toDebugString( String indent ) {
 		String ret = indent + getShortName();
 

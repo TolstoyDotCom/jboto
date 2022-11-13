@@ -28,14 +28,16 @@ import com.tolstoy.jboto.api.framework.FrameworkResult;
 public class FrameworkForeachCommand extends FrameworkCommand implements IFrameworkForeachCommand {
 	private static final Logger logger = LogManager.getLogger( FrameworkForeachCommand.class );
 
-	public FrameworkForeachCommand( String id, String targetClassname, String packageName, List<IFrameworkCommand> commands ) {
-		super( id, targetClassname, packageName, commands );
+	public FrameworkForeachCommand( String id, String targetClassname, String targetFQClassname, List<IFrameworkCommand> commands ) {
+		super( id, targetClassname, targetFQClassname, commands );
 	}
 
+	@Override
 	public String getShortName() {
 		return "foreach " + getTargetClassname();
 	}
 
+	@Override
 	public FrameworkResult run( IProduct product, IEnvironment env, Object outerExtra ) throws Exception {
 		IForeachCommand foreachCommand = (IForeachCommand) getConstructor().newInstance();
 

@@ -28,14 +28,16 @@ import com.tolstoy.jboto.api.framework.FrameworkResult;
 public class FrameworkBreakCommand extends FrameworkCommand implements IFrameworkBreakCommand {
 	private static final Logger logger = LogManager.getLogger( FrameworkBreakCommand.class );
 
-	public FrameworkBreakCommand( String id, String targetClassname, String packageName, List<IFrameworkCommand> commands ) {
-		super( id, targetClassname, packageName, commands );
+	public FrameworkBreakCommand( String id, String targetClassname, String targetFQClassname, List<IFrameworkCommand> commands ) {
+		super( id, targetClassname, targetFQClassname, commands );
 	}
 
+	@Override
 	public String getShortName() {
 		return "break";
 	}
 
+	@Override
 	public FrameworkResult run( IProduct product, IEnvironment env, Object extra ) throws Exception {
 		return FrameworkResult.BREAK;
 	}

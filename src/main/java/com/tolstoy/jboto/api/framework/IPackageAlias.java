@@ -13,6 +13,7 @@
  */
 package com.tolstoy.jboto.api.framework;
 
-public interface IFrameworkFactory {
-	IFramework makeFrameworkFromJSON( String name, String json ) throws Exception;
+public interface IPackageAlias {
+	String getAlias();
+	String getPackageName();
 }

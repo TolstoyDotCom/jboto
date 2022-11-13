@@ -26,17 +26,19 @@ import org.apache.logging.log4j.Logger;
 import com.tolstoy.jboto.api.framework.IFrameworkFactory;
 import com.tolstoy.jboto.api.framework.IFramework;
 import com.tolstoy.jboto.api.framework.IFrameworkCommand;
+import com.tolstoy.jboto.api.framework.IFQNResolver;
 
 public class FrameworkFactory implements IFrameworkFactory {
 	private static final Logger logger = LogManager.getLogger( FrameworkFactory.class );
 
-	private final String packageName;
+	private final IFQNResolver resolver;
 
-	public FrameworkFactory( String packageName ) {
-		this.packageName = packageName;
+	public FrameworkFactory( IFQNResolver resolver ) {
+		this.resolver = resolver;
 	}
 
-	public IFramework makeFrameworkFromJSON( String name, String json ) {
+	@Override
+	public IFramework makeFrameworkFromJSON( String name, String json ) throws Exception {
 		JsonObject rootMap = Jsoner.deserialize( json, new JsonObject() );
 
 		List<Object> list = (List<Object>) rootMap.get( "commands" );
@@ -47,7 +49,7 @@ public class FrameworkFactory implements IFrameworkFactory {
 		return new Framework( id, commands );
 	}
 
-	protected List<IFrameworkCommand> createCommands( List<Object> list ) {
+	protected List<IFrameworkCommand> createCommands( List<Object> list ) throws Exception {
 		List<IFrameworkCommand> ret = new ArrayList<IFrameworkCommand>();
 
 		for ( Object obj : list ) {
@@ -62,16 +64,16 @@ public class FrameworkFactory implements IFrameworkFactory {
 
 			IFrameworkCommand command;
 			if ( "command".equals( type ) ) {
-				ret.add( new FrameworkBasicCommand( id, classname, packageName, innerCommands ) );
+				ret.add( new FrameworkBasicCommand( id, classname, resolver.resolve( classname ), innerCommands ) );
 			}
 			else if ( "if".equals( type ) ) {
-				ret.add( new FrameworkIfCommand( id, classname, packageName, innerCommands ) );
+				ret.add( new FrameworkIfCommand( id, classname, resolver.resolve( classname ), innerCommands ) );
 			}
 			else if ( "foreach".equals( type ) ) {
-				ret.add( new FrameworkForeachCommand( id, classname, packageName, innerCommands ) );
+				ret.add( new FrameworkForeachCommand( id, classname, resolver.resolve( classname ), innerCommands ) );
 			}
 			else if ( "break".equals( type ) ) {
-				ret.add( new FrameworkBreakCommand( id, classname, packageName, innerCommands ) );
+				ret.add( new FrameworkBreakCommand( id, classname, resolver.resolve( classname ), innerCommands ) );
 			}
 			else {
 				throw new IllegalArgumentException( "unknown type " + type );

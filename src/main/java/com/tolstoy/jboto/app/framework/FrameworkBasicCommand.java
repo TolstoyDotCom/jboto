@@ -28,14 +28,16 @@ import com.tolstoy.jboto.api.IEnvironment;
 public class FrameworkBasicCommand extends FrameworkCommand implements IFrameworkBasicCommand {
 	private static final Logger logger = LogManager.getLogger( FrameworkBasicCommand.class );
 
-	public FrameworkBasicCommand( String id, String targetClassname, String packageName, List<IFrameworkCommand> commands ) {
-		super( id, targetClassname, packageName, commands );
+	public FrameworkBasicCommand( String id, String targetClassname, String targetFQClassname, List<IFrameworkCommand> commands ) {
+		super( id, targetClassname, targetFQClassname, commands );
 	}
 
+	@Override
 	public String getShortName() {
 		return getTargetClassname();
 	}
 
+	@Override
 	public FrameworkResult run( IProduct product, IEnvironment env, Object extra ) throws Exception {
 		IBasicCommand basicCommand = (IBasicCommand) getConstructor().newInstance();
 

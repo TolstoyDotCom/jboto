@@ -6,9 +6,9 @@
 			{ "type": "break", "classname": "--none--"}
 		]}
 	]},
-	{ "type": "command", "classname": "PaintIt" },
+	{ "type": "command", "classname": "sample:PaintIt" },
 	{ "type": "if", "classname": "HasLuxuryTrim", "commands": [
 		{ "type": "command", "classname": "AddWoodPaneling" }
 	]},
-	{ "type": "command", "classname": "RegisterIt" }
+	{ "type": "command", "classname": "sample:RegisterIt" }
 ]}
