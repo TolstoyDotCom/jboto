@@ -16,5 +16,5 @@ package com.tolstoy.jboto.api;
 import java.util.List;
 
 public interface IForeachCommand extends ICommand {
-	List<? extends Object> getList( IProduct product, IEnvironment env, Object extra ) throws Exception;
+	List<? extends Object> getList( IProduct product, IEnvironment env, Object extra, int index ) throws Exception;
 }

@@ -24,6 +24,6 @@ public interface IFrameworkCommand {
 	String getTargetFQClassname();
 	String getShortName();
 	List<IFrameworkCommand> getCommands();
-	FrameworkResult run( IProduct product, IEnvironment env, Object extra ) throws Exception;
+	FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception;
 	String toDebugString( String indent );
 }

@@ -30,9 +30,9 @@ public class Framework implements IFramework {
 		this.commands = commands;
 	}
 
-	public FrameworkResult run( IProduct product, IEnvironment env, Object extra ) throws Exception {
+	public FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception {
 		for ( IFrameworkCommand command : getCommands() ) {
-			FrameworkResult res = command.run( product, env, extra );
+			FrameworkResult res = command.run( product, env, extra, index );
 			if ( res != FrameworkResult.CONTINUE ) {
 				return res;
 			}

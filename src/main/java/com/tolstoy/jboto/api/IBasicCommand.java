@@ -14,5 +14,5 @@
 package com.tolstoy.jboto.api;
 
 public interface IBasicCommand extends ICommand {
-	void run( IProduct product, IEnvironment env, Object extra ) throws Exception;
+	void run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception;
 }

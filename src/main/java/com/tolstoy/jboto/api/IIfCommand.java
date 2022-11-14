@@ -14,5 +14,5 @@
 package com.tolstoy.jboto.api;
 
 public interface IIfCommand extends ICommand {
-	boolean test( IProduct product, IEnvironment env, Object extra ) throws Exception;
+	boolean test( IProduct product, IEnvironment env, Object extra, int index ) throws Exception;
 }

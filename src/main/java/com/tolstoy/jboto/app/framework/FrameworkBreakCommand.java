@@ -38,7 +38,7 @@ public class FrameworkBreakCommand extends FrameworkCommand implements IFramewor
 	}
 
 	@Override
-	public FrameworkResult run( IProduct product, IEnvironment env, Object extra ) throws Exception {
+	public FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception {
 		return FrameworkResult.BREAK;
 	}
 }

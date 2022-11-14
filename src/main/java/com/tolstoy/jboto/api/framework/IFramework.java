@@ -21,6 +21,6 @@ import com.tolstoy.jboto.api.IEnvironment;
 public interface IFramework {
 	String getName();
 	List<IFrameworkCommand> getCommands();
-	FrameworkResult run( IProduct product, IEnvironment env, Object extra ) throws Exception;
+	FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception;
 	String toDebugString( String indent );
 }
