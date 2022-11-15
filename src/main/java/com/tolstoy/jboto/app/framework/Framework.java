@@ -15,30 +15,50 @@ package com.tolstoy.jboto.app.framework;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.tolstoy.jboto.api.IProduct;
 import com.tolstoy.jboto.api.IEnvironment;
 import com.tolstoy.jboto.api.framework.IFramework;
 import com.tolstoy.jboto.api.framework.IFrameworkCommand;
 import com.tolstoy.jboto.api.framework.FrameworkResult;
+import com.tolstoy.jboto.api.IBasicCommand;
 
 public class Framework implements IFramework {
-	private final String name;
+	private static final Logger logger = LogManager.getLogger( Framework.class );
+
+	private final String name, finallyFQN;
 	private final List<IFrameworkCommand> commands;
 
-	Framework( String name, List<IFrameworkCommand> commands ) {
+	Framework( String name, List<IFrameworkCommand> commands, String finallyFQN ) {
 		this.name = name;
 		this.commands = commands;
+		this.finallyFQN = finallyFQN;
 	}
 
 	public FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception {
-		for ( IFrameworkCommand command : getCommands() ) {
-			FrameworkResult res = command.run( product, env, extra, index );
-			if ( res != FrameworkResult.CONTINUE ) {
-				return res;
+		try {
+			for ( IFrameworkCommand command : getCommands() ) {
+				FrameworkResult res = command.run( product, env, extra, index );
+				if ( res != FrameworkResult.CONTINUE ) {
+					return res;
+				}
+			}
+
+			return FrameworkResult.CONTINUE;
+		}
+		finally {
+			if ( finallyFQN != null ) {
+				try {
+					IBasicCommand finallyCommand = (IBasicCommand) Class.forName( finallyFQN ).getConstructor().newInstance();
+					finallyCommand.run( product, env, extra, index );
+				}
+				catch ( Exception e ) {
+					logger.error( "exception running finally command " + finallyFQN, e );
+				}
 			}
 		}
-
-		return FrameworkResult.CONTINUE;
 	}
 
 	public String getName() {

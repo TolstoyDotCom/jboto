@@ -41,6 +41,8 @@ public class FrameworkForeachCommand extends FrameworkCommand implements IFramew
 	public FrameworkResult run( IProduct product, IEnvironment env, Object outerExtra, int outerIndex ) throws Exception {
 		IForeachCommand foreachCommand = (IForeachCommand) getConstructor().newInstance();
 
+		beforeRun( product, env, outerExtra, outerIndex );
+
 		int innerIndex = 0;
 		for ( Object innerExtra : foreachCommand.getList( product, env, outerExtra, outerIndex ) ) {
 			for ( IFrameworkCommand command : getCommands() ) {
@@ -57,6 +59,8 @@ public class FrameworkForeachCommand extends FrameworkCommand implements IFramew
 
 			innerIndex++;
 		}
+
+		afterRun( product, env, outerExtra, outerIndex );
 
 		return FrameworkResult.CONTINUE;
 	}

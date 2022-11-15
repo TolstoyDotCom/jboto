@@ -44,9 +44,12 @@ public class FrameworkFactory implements IFrameworkFactory {
 		List<Object> list = (List<Object>) rootMap.get( "commands" );
 		String id = (String) rootMap.get( "id" );
 
+		String finallyShortname = (String) rootMap.get( "finally" );
+		String finallyFQN = finallyShortname != null && finallyShortname.length() > 0 ? resolver.resolve( finallyShortname ) : null;
+
 		List<IFrameworkCommand> commands = createCommands( list );
 
-		return new Framework( id, commands );
+		return new Framework( id, commands, finallyFQN );
 	}
 
 	protected List<IFrameworkCommand> createCommands( List<Object> list ) throws Exception {

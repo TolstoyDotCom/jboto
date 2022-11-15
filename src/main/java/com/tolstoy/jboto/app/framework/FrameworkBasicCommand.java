@@ -41,7 +41,11 @@ public class FrameworkBasicCommand extends FrameworkCommand implements IFramewor
 	public FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception {
 		IBasicCommand basicCommand = (IBasicCommand) getConstructor().newInstance();
 
+		beforeRun( product, env, extra, index );
+
 		basicCommand.run( product, env, extra, index );
+
+		afterRun( product, env, extra, index );
 
 		return FrameworkResult.CONTINUE;
 	}

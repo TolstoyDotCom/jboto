@@ -41,16 +41,24 @@ public class FrameworkIfCommand extends FrameworkCommand implements IFrameworkIf
 	public FrameworkResult run( IProduct product, IEnvironment env, Object extra, int index ) throws Exception {
 		IIfCommand basicCommand = (IIfCommand) getConstructor().newInstance();
 
+		beforeRun( product, env, extra, index );
+
 		if ( !basicCommand.test( product, env, extra, index ) ) {
+			afterRun( product, env, extra, index );
+
 			return FrameworkResult.CONTINUE;
 		}
 
 		for ( IFrameworkCommand command : getCommands() ) {
 			FrameworkResult res = command.run( product, env, extra, index );
 			if ( res != FrameworkResult.CONTINUE ) {
+				afterRun( product, env, extra, index );
+
 				return res;
 			}
 		}
+
+		afterRun( product, env, extra, index );
 
 		return FrameworkResult.CONTINUE;
 	}

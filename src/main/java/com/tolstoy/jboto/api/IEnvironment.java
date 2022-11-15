@@ -13,5 +13,9 @@
  */
 package com.tolstoy.jboto.api;
 
+import com.tolstoy.basic.api.installation.DebugLevel;
+
 public interface IEnvironment {
+	DebugLevel getDebugLevel();
+	void setDebugLevel( DebugLevel val );
 }

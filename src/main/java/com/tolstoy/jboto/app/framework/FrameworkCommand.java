@@ -16,9 +16,17 @@ package com.tolstoy.jboto.app.framework;
 import java.util.List;
 import java.lang.reflect.Constructor;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.tolstoy.basic.api.installation.DebugLevel;
 import com.tolstoy.jboto.api.framework.IFrameworkCommand;
+import com.tolstoy.jboto.api.IProduct;
+import com.tolstoy.jboto.api.IEnvironment;
 
 abstract public class FrameworkCommand implements IFrameworkCommand {
+	private static final Logger logger = LogManager.getLogger( FrameworkCommand.class );
+
 	private final String id, targetClassname, targetFQClassname;
 	private final List<IFrameworkCommand> commands;
 
@@ -53,6 +61,24 @@ abstract public class FrameworkCommand implements IFrameworkCommand {
 		Class<?> clazz = Class.forName( getTargetFQClassname() );
 
 		return clazz.getConstructor();
+	}
+
+	protected void beforeRun( IProduct product, IEnvironment env, Object extra, int index ) {
+		DebugLevel debugLevel = env.getDebugLevel();
+		if ( debugLevel == null || debugLevel == DebugLevel.NONE ) {
+			return;
+		}
+
+		logger.info( "  ** RUNNING " + getShortName() + " **" );
+	}
+
+	protected void afterRun( IProduct product, IEnvironment env, Object extra, int index ) {
+		DebugLevel debugLevel = env.getDebugLevel();
+		if ( debugLevel == null || debugLevel == DebugLevel.NONE ) {
+			return;
+		}
+
+		logger.info( "  ** RAN " + getShortName() + " **" );
 	}
 
 	@Override
